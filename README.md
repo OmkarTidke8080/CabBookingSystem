@@ -38,7 +38,6 @@ Admins can view all the user's email id, the number of cabs they have booked who
 
 ## clone or download
 ```terminal
-$ git clone https://github.com/rakshit-2/scaler_assignment.git
 $ cd client(ReactJs),cd server(NodeJs)
 $ yarn # or npm i
 ```
