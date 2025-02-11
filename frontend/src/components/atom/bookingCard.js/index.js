@@ -11,7 +11,7 @@ const BookingCard = (props) => {
   return (
     <div className={styles.booking__cab__card}>
         <div className={styles.booking__cab__card__img}>
-            <img src={require('./../../assets/images/'+props.ele.cab_image)} style={{width:"100%",height:"100%"}}  alt="car"/>
+            {/* <img src={require('./../../assets/images/'+props.ele.cab_image)} style={{width:"100%",height:"100%"}}  alt="car"/> */}
         </div>
         <div className={styles.booking__cab__card__content}>
             <div className={styles.booking__cab__card__content__top}>

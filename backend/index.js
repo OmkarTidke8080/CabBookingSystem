@@ -11,7 +11,7 @@ import userBooking from "./routes/userBooking.js";
 import allCabBooking from "./routes/allCabBookings.js";
 import addCab from "./routes/addCabs.js";
 import getCabs from "./routes/fetchCabs.js";
-
+import userRoutes from "./routes/userRoutes.js"
 
 // Enable strictQuery mode for Mongoose
 mongoose.set("strictQuery", true);
@@ -47,7 +47,7 @@ const connectDatabase = async () => {
     app.use("/allcab", allCabBooking);
     app.use("/addCab", addCab);
     app.use("/cabs", getCabs);
-
+    app.use("/register",userRoutes)
 
     // logger_all.Logger.info("Middleware added, starting connection!!");
 

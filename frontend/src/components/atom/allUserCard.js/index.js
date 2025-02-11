@@ -25,7 +25,7 @@ const AllCardUser = (props) => {
             <>
             <div className={styles.users__inner__left__display__each}>           
                 <div className={styles.users__inner__left__display__each__sno}>
-                    {props.ele._id.slice(3,8)}
+                    {/* {props.ele._id.slice(3,8)} */}
                 </div>
                 <div className={styles.users__inner__left__display__each__sno}>
                     {props.ele.cab_name}

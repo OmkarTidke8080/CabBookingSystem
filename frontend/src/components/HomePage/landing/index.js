@@ -1,12 +1,12 @@
 import styles from "./index.module.css";
-import Navbar from "./../../molecule/navbar";
-import Banner from "./../../molecule/banner";
-import Users from "./../../molecule/users";
-import Cabs from "./../../molecule/cabs";
-import BookingSection from "./../../molecule/booking";
+import Navbar from "../../Pages/navbar/Navbar";
+import Banner from "../../Pages/banner";
+import Users from "../../Pages/users";
+import Cabs from "../../Pages/cabs";
+import BookingSection from "../../Pages/booking";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import NumPlace from "./../../assets/store/numPlace.json";
+import NumPlace from "../../assets/store/numPlace.json";
 import {
   faTriangleExclamation,
   faCircleCheck,
@@ -15,7 +15,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 
-import ErrorCard from "./../../atom/errorCard";
+import ErrorCard from "../../atom/errorCard";
 
 const Landing = (props) => {
   // global states passed from parent to child so on
@@ -49,7 +49,7 @@ const Landing = (props) => {
   //with this user gets the freedom of choice and better experience
   function fetchCabs() {
     setCabDisplayLoading(true);
-    axios.get("http://localhost:5000/cab/fetch-cab", {}).then((res) => {
+    axios.get("http://localhost:5000/cabs/getAllCabs", {}).then((res) => {
       // console.log
       if (res.data !== null) {
         setCabData(res.data);
@@ -61,17 +61,16 @@ const Landing = (props) => {
   //fetch all cabs detail function(fetches all the cabs that have been booked by each user with their timestamp, price etc)
   function fetchAllCabDetail() {
     setAllCabsLoading(true);
-   axios.get("http://localhost:5000/allcab/get-all-cab", {}).then((res) => {
-     console.log("Response Data:", res.data);
-     if (Array.isArray(res.data)) {
-       setAllCabs(res.data.reverse());
-     } else {
-       console.error("Expected an array, but got:", res.data);
-       setAllCabs([]); // Set to an empty array or handle appropriately
-     }
-     setAllCabsLoading(false);
-   });
-
+    axios.get("http://localhost:5000/allcab/get-all-cab", {}).then((res) => {
+      console.log("Response Data:", res.data);
+      if (Array.isArray(res.data)) {
+        setAllCabs(res.data.reverse());
+      } else {
+        console.error("Expected an array, but got:", res.data);
+        setAllCabs([]); // Set to an empty array or handle appropriately
+      }
+      setAllCabsLoading(false);
+    });
   }
 
   //useEffect calling each function on load with an empty [] so the useEffect is called only once
@@ -148,6 +147,36 @@ const Landing = (props) => {
   }
 
   //cab booking clicked function(as soon as the cab is booked the user gets the email of confermation using node mailer)
+  // function cabBookClicked(ele, price, time) {
+  //   if (
+  //     time === null ||
+  //     email === "" ||
+  //     sourceLocation === "" ||
+  //     destLocation === ""
+  //   ) {
+  //     showError(" Check Fair First!!", "error");
+  //     return;
+  //   }
+  //   axios
+  //     .post("http://localhost:5000/user/update-user-booking", {
+  //       source: sourceLocation,
+  //       dest: destLocation,
+  //       obj: ele,
+  //       total_time: time,
+  //       total_price: price,
+  //       email: email,
+  //     })
+  //     .then((res) => {
+  //       if (res.data.data === false) {
+  //         showError(res.data.message, "error");
+  //         return;
+  //       }
+  //       showError("Cab Booked Successfully!!", "error");
+  //       console.log(res.data);
+  //       fetchAllUsers();
+  //       fetchAllCabDetail();
+  //     });
+  // }
   function cabBookClicked(ele, price, time) {
     if (
       time === null ||
@@ -155,9 +184,10 @@ const Landing = (props) => {
       sourceLocation === "" ||
       destLocation === ""
     ) {
-      showError(" Check Fair First!!", "error");
+      showError("Check Fare First!!", "error");
       return;
     }
+
     axios
       .post("http://localhost:5000/user/update-user-booking", {
         source: sourceLocation,
@@ -172,12 +202,19 @@ const Landing = (props) => {
           showError(res.data.message, "error");
           return;
         }
-        showError("Cab Booked Successfully!!", "error");
+
+        let successMessage = "Cab Booked Successfully!!";
+        if (res.data.discountApplied > 0) {
+          successMessage += ` You received a discount of Rs${res.data.discountApplied}/-!`;
+        }
+
+        showError(successMessage, "success");
         console.log(res.data);
         fetchAllUsers();
         fetchAllCabDetail();
       });
   }
+
 
   return (
     <>
@@ -208,11 +245,10 @@ const Landing = (props) => {
           cabDisplayLoading={cabDisplayLoading}
           cabBookClicked={cabBookClicked}
         />
-        
 
-         <Users flag={1} allUsers={allUsers} allUserLoading={allUserLoading} />
+        {/* <Users flag={1} allUsers={allUsers} allUserLoading={allUserLoading} /> */}
 
-        <Cabs flag={0} allCabs={allCabs} allCabsLoading={allCabsLoading} /> 
+        <Cabs flag={0} allCabs={allCabs} allCabsLoading={allCabsLoading} />
       </div>
     </>
   );

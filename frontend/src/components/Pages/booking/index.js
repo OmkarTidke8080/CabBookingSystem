@@ -147,7 +147,9 @@ const Booking = (props) => {
             {props.totalTime ? <>{props.totalTime} min</> : "Check Fair!"}{" "}
             {"\u00A0"}
           </div>
-          {/* <div className={styles.booking__inner__right__display}>
+          <div
+          //  className={styles.booking__inner__right__display}
+          >
             {props.cabDisplayLoading ? (
               <>
                 <Ring size={40} lineWeight={5} speed={2} color="black" />
@@ -163,7 +165,7 @@ const Booking = (props) => {
                 );
               })
             )}
-          </div> */}
+          </div>
         </div>
       </div>
     </div>
